@@ -155,7 +155,7 @@ No known bugs at this time.
 
 ## Authors
 Foster Clark - [fozc](https://github.com/FosterClark48)  
-Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+Joshua Beeson - [Github](https://github.com/jbees918)
 
 Second part of Airbnb: Joann Vuong
 ## License
