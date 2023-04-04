@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" instance of Flask """
+""" Creating an instance of Flask """
 from flask import Flask, make_response
 from flask_cors import CORS
 from models import storage
@@ -24,7 +24,7 @@ def handle_404(exception):
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """ close storage """
+    """ method closes storage  session"""
     storage.close()
 
 
