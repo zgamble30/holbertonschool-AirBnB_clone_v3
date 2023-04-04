@@ -1,12 +1,16 @@
 #!/usr/bin/python3
 """ app.py: Main Flask application file """
 from flask import Flask, jsonify, make_response
+from flask_cors import CORS
 from os import environ
 from models import storage
 from api.v1.views import app_views
 
 
 app = Flask(__name__)
+# Cross Object Resource Sharing allows access to routes starting
+# w/ /api/v1/ from any IP address.
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
 # app_views is a Flask blueprint used to group & organize the
 # different routes & views of your application.
 # This registers the blueprint w/ Flask app instance 'app'.
@@ -27,7 +31,7 @@ def close_storage(exception=None):
 @app.errorhandler(404)
 def not_found(error):
     """ Handle 404 errors, returning a JSON-formatted response. """
-    return make_response(jsonify({"error": "Not Found"}), 404)
+    return make_response(jsonify({"error": "Not found"}), 404)
 
 
 if __name__ == '__main__':
