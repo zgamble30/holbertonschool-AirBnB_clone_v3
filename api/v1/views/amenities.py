@@ -3,7 +3,7 @@
 Module that creates view for Amenity objects handling default
 RESTful API actions
 """
-# Imports app_views blueprint 
+# Imports app_views blueprint
 from api.v1.views import app_views
 # Import necessary Flask modules
 from flask import jsonify, abort, request, make_response
