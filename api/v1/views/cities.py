@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-This script defines API endpoints for managing City objects. 
+This script defines API endpoints for managing City objects.
 It includes routes for getting a list of cities in a state,
 getting a specific city by its ID, creating a new city in a state,
 updating an existing city, and deleting a city.
@@ -17,10 +17,12 @@ The following routes are implemented:
 - PUT /cities/<city_id>:
     Updates a City object with the provided JSON data.
 
-Each route has error handling for cases like non-existent state or city IDs, 
-missing or incorrect JSON data in the request, and attempts to modify read-only attributes.
+Each route has error handling for cases like non-existent state or city IDs,
+missing or incorrect JSON data in the request, and attempts to modify
+read-only attributes.
 
-The script uses the Flask web framework, and the City and State objects are managed by a storage system.
+The script uses the Flask web framework, and the City and State
+objects are managed by a storage system.
 """
 from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
