@@ -1,37 +1,24 @@
 #!/usr/bin/python3
-"""
-Flask route that returns json status response
-"""
+"""Route to index page"""
+from json import dumps
+from flask import Response
 from api.v1.views import app_views
-from flask import jsonify, request
-from models import storage
+from models import storage, class_dictionary
+
+classConversion = {"Amenity": "amenities", "City": "cities", "Place": "places",
+                   "Review": "reviews", "State": "states", "User": "users"}
 
 
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status', methods=['GET'], strict_slashes=False)
 def status():
-    """
-    function for status route that returns the status
-    """
-    if request.method == 'GET':
-        resp = {"status": "OK"}
-        return jsonify(resp)
+    """Return status of API"""
+    return Response(dumps({"status": "OK"}), content_type='application/json')
 
 
-@app_views.route('/stats', methods=['GET'])
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
 def stats():
-    """
-    function to return the count of all class objects
-    """
-    if request.method == 'GET':
-        response = {}
-        PLURALS = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states",
-            "User": "users"
-        }
-        for key, value in PLURALS.items():
-            response[value] = storage.count(key)
-        return jsonify(response)
+    """Return number of objects by type"""
+    data = {}
+    for cls in class_dictionary.keys():
+        data[classConversion[cls]] = storage.count(cls)
+    return Response(dumps(data), content_type='application/json')
