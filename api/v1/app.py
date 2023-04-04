@@ -3,11 +3,12 @@
 """
 Flask App that integrates with AirBnB static HTML Template
 """
-from api.v1.views.index import app_views
+
 from flask import Flask, jsonify, make_response, render_template, url_for
 from flask_cors import CORS, cross_origin
 from flasgger import Swagger
 from models import storage
+from api.v1.views import app_views
 import os
 from werkzeug.exceptions import HTTPException
 
