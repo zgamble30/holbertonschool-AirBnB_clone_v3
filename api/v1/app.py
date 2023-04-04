@@ -13,6 +13,7 @@ app = Flask(__name__)
 # This tells Flask to include routes & views defined in app_views
 app.register_blueprint(app_views)
 
+
 @app.teardown_appcontext
 def close_storage(exception=None):
     """
@@ -21,6 +22,7 @@ def close_storage(exception=None):
     It ensures that the storage connection is properly closed.
     """
     storage.close()
+
 
 if __name__ == '__main__':
     """
