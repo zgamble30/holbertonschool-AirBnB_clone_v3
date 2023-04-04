@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """ instance of Flask """
 from flask import Flask, make_response
