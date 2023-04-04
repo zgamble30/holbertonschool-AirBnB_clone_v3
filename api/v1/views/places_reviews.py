@@ -17,12 +17,12 @@ from models.user import User
 
 @app_views.route("/places/<string:place_id>/reviews", methods=["GET"],
                  strict_slashes=False)
-# Takes place_id as arg. 
+# Takes place_id as arg.
 def place_reviews_get(place_id):
     """
     Retrieves list of all Review objects linked to a Place.
     """
-    # Retrieves dict of all place objects from storage. 
+    # Retrieves dict of all place objects from storage.
     # Objects are stores in place_dict variable.
     place_dict = storage.all(Place)
     review_list = None
