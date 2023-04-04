@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ app.py: Main Flask application file """
-from flask import Flask, jsonify
+from flask import Flask, jsonify, make_response
 from os import environ
 from models import storage
 from api.v1.views import app_views
@@ -27,7 +27,7 @@ def close_storage(exception=None):
 @app.errorhandler(404)
 def not_found(error):
     """ Handle 404 errors, returning a JSON-formatted response. """
-    return jsonify({"error": "Not Found"}), 404
+    return make_response(jsonify({"error": "Not Found"}), 404)
 
 
 if __name__ == '__main__':
