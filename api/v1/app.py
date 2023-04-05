@@ -6,10 +6,10 @@ from models import storage
 from api.v1.views import app_views
 from os import getenv as env
 
-
-
 # create an instance of Flask
 app = Flask(__name__)
+
+
 CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 # register blueprint
 app.register_blueprint(app_views)
