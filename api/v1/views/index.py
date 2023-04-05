@@ -1,24 +1,31 @@
 #!/usr/bin/python3
-"""Route to index page"""
-from json import dumps
-from flask import Response
+"""
+Index view for API
+"""
+from flask import Flask, jsonify
+from models import storage
 from api.v1.views import app_views
-"from models import storage, class_dictionary"
-
-classConversion = {"Amenity": "amenities", "City": "cities", "Place": "places",
-                   "Review": "reviews", "State": "states", "User": "users"}
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route('/status')
 def status():
-    """Return status of API"""
-    return Response(dumps({"status": "OK"}), content_type='application/json')
+    """
+    Returns a JSON object with the status of the API
+    """
+    return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+@app_views.route('/stats')
 def stats():
-    """Return number of objects by type"""
-    data = {}
-    for cls in class_dictionary.keys():
-        data[classConversion[cls]] = storage.count(cls)
-    return Response(dumps(data), content_type='application/json')
+    """
+    Retrieves the number of each objects by type
+    """
+    classes = {
+        "Amenity": storage.count("Amenity"),
+        "City": storage.count("City"),
+        "Place": storage.count("Place"),
+        "Review": storage.count("Review"),
+        "State": storage.count("State"),
+        "User": storage.count("User")
+    }
+    return jsonify(classes)
