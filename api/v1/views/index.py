@@ -1,32 +1,36 @@
 #!/usr/bin/python3
 """
-Index view for API
+Index route for API V1
 """
+from api.v1.views import *
+from flask import Flask, jsonify
 
-from api.v1.views import app_views
-from flask import jsonify
+app_views = Flask(__name__)
+app_views.url_map.strict_slashes = False
 
 
-@app_views.route('/status')
+@app_views.route('/status', methods=['GET'])
 def status():
-    """
-    Return a JSON-formatted status response
-    """
-    return jsonify(status="OK")
+    """ Returns status: OK """
+    return jsonify(status='OK')
 
 
-@app_views.route('/stats')
+@app_views.route('/stats', methods=['GET'])
 def stats():
-    """
-    Return a JSON-formatted stats response
-    """
+    """Returns number of each endpoint in storage"""
     from models import storage
-    stats = {
-        'amenities': storage.count('Amenity'),
-        'cities': storage.count('City'),
-        'places': storage.count('Place'),
-        'reviews': storage.count('Review'),
-        'states': storage.count('State'),
-        'users': storage.count('User')
+    cls_dict = {
+        "amenities": "Amenity",
+        "cities": "City",
+        "places": "Place",
+        "reviews": "Review",
+        "states": "State",
+        "users": "User"
     }
-    return jsonify(stats)
+    return_dict = {}
+    for key, value in cls_dict.items():
+        return_dict[key] = storage.count(value)
+    return jsonify(return_dict)
+
+if __name__ == "__main__":
+    pass
