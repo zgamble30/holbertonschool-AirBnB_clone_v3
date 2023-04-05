@@ -1,7 +1,14 @@
 #!/usr/bin/python3
-"""Define a blueprint for the API v1"""
+from api.v1.views.index import *
+from api.v1.views.states import *
+from api.v1.views.cities import *
+from api.v1.views.amenities import *
+from api.v1.views.users import *
+from api.v1.views.places import *
+from api.v1.views.places_reviews import *
 from flask import Blueprint, abort, request
-
+"""Define a blueprint for the API v1"""
+"""import flask views"""
 app_views = Blueprint('app_views', __name__, url_prefix='/api/v1')
 
 
@@ -23,12 +30,3 @@ def get_json(required_fields=[]):
         if result.get(field) is None:
             abort(400, 'Missing {}'.format(field))
     return result
-
-# Pep8 doesn't like the next line, project said it's okay
-from api.v1.views.index import *
-from api.v1.views.states import *
-from api.v1.views.cities import *
-from api.v1.views.amenities import *
-from api.v1.views.users import *
-from api.v1.views.places import *
-#from api.v1.views.places_reviews import *
