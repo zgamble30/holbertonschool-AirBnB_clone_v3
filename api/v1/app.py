@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-""" instance of Flask """
+""" Creating an instance of Flask """
 from flask import Flask, make_response
 from flask_cors import CORS
 from models import storage
-from api.v1.views import app_views
+"from api.v1.views import app_views"
 from os import getenv as env
 
 
@@ -24,7 +24,7 @@ def handle_404(exception):
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """ close storage """
+    """ method closes storage  session"""
     storage.close()
 
 
@@ -33,7 +33,6 @@ def start_flask():
     app.run(host=env('HBNB_API_HOST'),
             port=env('HBNB_API_PORT'),
             threaded=True)
-
 
 if __name__ == "__main__":
     start_flask()
