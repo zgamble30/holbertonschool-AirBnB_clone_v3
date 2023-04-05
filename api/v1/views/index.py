@@ -2,7 +2,7 @@
 """
 Index route for API V1
 """
-from api.v1.views import *
+from api.v1.views import app_views
 from flask import Flask, jsonify
 
 app_views = Flask(__name__)
