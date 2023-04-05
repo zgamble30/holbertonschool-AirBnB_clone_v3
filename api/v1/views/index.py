@@ -2,30 +2,31 @@
 """
 Index view for API
 """
-from flask import Flask, jsonify
-from models import storage
+
 from api.v1.views import app_views
+from flask import jsonify
 
 
 @app_views.route('/status')
 def status():
     """
-    Returns a JSON object with the status of the API
+    Return a JSON-formatted status response
     """
-    return jsonify({'status': 'OK'})
+    return jsonify(status="OK")
 
 
 @app_views.route('/stats')
 def stats():
     """
-    Retrieves the number of each objects by type
+    Return a JSON-formatted stats response
     """
-    classes = {
-        "Amenity": storage.count("Amenity"),
-        "City": storage.count("City"),
-        "Place": storage.count("Place"),
-        "Review": storage.count("Review"),
-        "State": storage.count("State"),
-        "User": storage.count("User")
+    from models import storage
+    stats = {
+        'amenities': storage.count('Amenity'),
+        'cities': storage.count('City'),
+        'places': storage.count('Place'),
+        'reviews': storage.count('Review'),
+        'states': storage.count('State'),
+        'users': storage.count('User')
     }
-    return jsonify(classes)
+    return jsonify(stats)
