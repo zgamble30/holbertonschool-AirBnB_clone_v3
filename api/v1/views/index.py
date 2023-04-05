@@ -3,7 +3,7 @@
 from json import dumps
 from flask import Response
 from api.v1.views import app_views
-from models import storage, class_dictionary
+"from models import storage, class_dictionary"
 
 classConversion = {"Amenity": "amenities", "City": "cities", "Place": "places",
                    "Review": "reviews", "State": "states", "User": "users"}
