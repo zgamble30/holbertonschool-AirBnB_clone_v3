@@ -1,30 +1,51 @@
 #!/usr/bin/python3
-""" Creating an instance of Flask """
+""" app.py: Main Flask application file """
 from flask import Flask, jsonify, make_response
 from flask_cors import CORS
+from os import environ
 from models import storage
 from api.v1.views import app_views
-from os import getenv as env
 
 
 app = Flask(__name__)
-CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
+# Cross Object Resource Sharing allows access to routes starting
+# w/ /api/v1/ from any IP address.
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+# app_views is a Flask blueprint used to group & organize the
+# different routes & views of your application.
+# This registers the blueprint w/ Flask app instance 'app'.
+# This tells Flask to include routes & views defined in app_views
 app.register_blueprint(app_views)
 
 
-@app.errorhandler(404)
-def handle_404(exception):
-    """handles 404 scenario (page not found)"""
-    return make_response(jsonify({"error": "Not found"}), 404)
-
-
 @app.teardown_appcontext
-def teardown(exception):
-    """method closes storage session"""
+def close_storage(exception=None):
+    """
+    Close the storage connection.
+    This function is called when the app context is torn down.
+    It ensures that the storage connection is properly closed.
+    """
     storage.close()
 
 
-if __name__ == "__main__":
-    app.run(host=env('HBNB_API_HOST'),
-            port=env('HBNB_API_PORT'),
-            threaded=True)
+@app.errorhandler(404)
+def not_found(error):
+    """ Handle 404 errors, returning a JSON-formatted response. """
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+
+if __name__ == '__main__':
+    """
+    Run the Flask server w/ specified host, port, & threaded option.
+    The host and port are retrieved from environment variables if available,
+    otherwise, default values are used.
+    """
+    # These 2 lines retrieve the value of the environment variables & assign
+    # it to host/port variables. If env var not defined,
+    # default to 0.0.0.0/5000.
+    host = environ.get("HBNB_API_HOST", "0.0.0.0")
+    port = environ.get("HBNB_API_PORT", 5000)
+    # This line runs Flask server w/ host/port values from env vars or default
+    # Enables multi-threading, allowing handling of
+    # multiple requests concurrently.
+    app.run(host=host, port=port, threaded=True)
