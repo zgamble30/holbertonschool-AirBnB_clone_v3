@@ -4,6 +4,7 @@ Index route for API V1
 """
 from api.v1.views import app_views
 from flask import Flask, jsonify
+from models import storage
 
 app_views = Flask(__name__)
 app_views.url_map.strict_slashes = False
