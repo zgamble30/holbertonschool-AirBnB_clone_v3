@@ -1,20 +1,24 @@
 #!/usr/bin/python3
-""" creates a JSON response """
+"""
+Index module to create routes on app_views objects.
+"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
 
 
-@app_views.route('/status', methods=['GET'], strict_slashes=False)
+@app_views.route('/status')
 def status():
-    """creates a JSON response for status message"""
-    return jsonify({"status": "OK"})
+    """Return OK status"""
+    return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'], strict_slashes=False)
-def get_stats():
-    """Retrieves the number of each object by type"""
-    stats = {
+@app_views.route("/stats")
+def stats_route():
+    """
+    Retrieve number of each objects by the type
+    """
+    count_dict = {
         "amenities": storage.count("Amenity"),
         "cities": storage.count("City"),
         "places": storage.count("Place"),
@@ -22,5 +26,4 @@ def get_stats():
         "states": storage.count("State"),
         "users": storage.count("User")
     }
-
-    return jsonify(stats)
+    return jsonify(count_dict)
