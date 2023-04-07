@@ -1,37 +1,29 @@
 #!/usr/bin/python3
 """
-Index route for API V1
+Index module to create routes on app_views objects.
 """
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import jsonify
 from models import storage
 
-app_views = Flask(__name__)
-app_views.url_map.strict_slashes = False
 
-
-@app_views.route('/status', methods=['GET'])
+@app_views.route('/status')
 def status():
-    """ Returns status: OK """
-    return jsonify(status='OK')
+    """Return OK status"""
+    return jsonify({'status': 'OK'})
 
 
-@app_views.route('/stats', methods=['GET'])
-def stats():
-    """Returns number of each endpoint in storage"""
-    from models import storage
-    cls_dict = {
-        "amenities": "Amenity",
-        "cities": "City",
-        "places": "Place",
-        "reviews": "Review",
-        "states": "State",
-        "users": "User"
+@app_views.route("/stats")
+def stats_route():
+    """
+    Retrieve number of each objects by the type
+    """
+    count_dict = {
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
     }
-    return_dict = {}
-    for key, value in cls_dict.items():
-        return_dict[key] = storage.count(value)
-    return jsonify(return_dict)
-
-if __name__ == "__main__":
-    pass
+    return jsonify(count_dict)
